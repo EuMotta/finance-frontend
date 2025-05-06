@@ -3,7 +3,6 @@ import '@/styles/globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 
-import { Widget } from '@/components/helper';
 import Providers from '@/providers';
 import { ThemeProvider } from '@/providers/theme-provider';
 
@@ -38,9 +37,6 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             {children}
-            <div className="flex justify-end">
-              <Widget />
-            </div>
           </ThemeProvider>
         </Providers>
       </body>
