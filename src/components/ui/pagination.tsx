@@ -46,7 +46,6 @@ export function Pagination({
       </span>
 
       <div className="flex items-center gap-2">
-       
         {renderNavButton(
           hasPrevious,
           currentPage - 1,
@@ -54,7 +53,6 @@ export function Pagination({
           'Página anterior',
         )}
 
-        
         {Array.from({ length: totalPages }).map((_, i) => {
           const page = i + 1;
           return (
@@ -69,7 +67,6 @@ export function Pagination({
           );
         })}
 
-       
         {renderNavButton(
           hasNext,
           currentPage + 1,

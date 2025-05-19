@@ -10,7 +10,11 @@ import { MdGroups, MdKitchen } from 'react-icons/md';
 
 import { ChartAreaInteractive } from '@/components/charts/line-chart';
 import { TransactionsTable } from '@/components/finance/table';
+import { siteConfig } from '@/settings/routes';
 import CardGrid from '@/templates/dashboard/cards';
+import Transactions from '@/templates/dashboard/transactions-table';
+import { SummaryByCategory } from '@/templates/dashboard/summary-by-category';
+import UpcomingTransactions from '@/templates/dashboard/upcoming-transactions';
 const Component = () => {
   const transactions = [
     {
@@ -71,109 +75,27 @@ const Component = () => {
   ];
   return (
     <main>
-      <div className="p-6 font-sans">
-        <header className="mb-8">
-          <div className="mb-6 flex items-center justify-between">
+      <div className="space-y-8">
+        <header className="">
+          <div className="flex items-center justify-between">
             <h1 className="text-2xl font-bold">Financial Dashboard</h1>
           </div>
         </header>
 
         <CardGrid />
 
-        <div className="mb-8 grid grid-cols-1 gap-6 lg:grid-cols-3">
-          <div className="rounded-xl border border-gray-100 bg-white p-5 shadow-sm lg:col-span-2">
-            <div className="mb-6 flex items-center justify-between">
-              <h3 className="text-lg font-bold">Revenue Overview</h3>
-              <div className="group relative">
-                <button className="rounded-lg p-2 transition-colors duration-300 hover:bg-gray-100">
-                  <span className="material-symbols-outlined">more_horiz</span>
-                </button>
-                <div className="invisible absolute right-0 z-50 mt-2 w-40 rounded-lg bg-white p-2 opacity-0 shadow-lg transition-all duration-300 group-hover:visible group-hover:opacity-100">
-                  <div className="cursor-pointer rounded-md px-2 py-1 transition-colors duration-300 hover:bg-gray-50">
-                    Download
-                  </div>
-                  <div className="cursor-pointer rounded-md px-2 py-1 transition-colors duration-300 hover:bg-gray-50">
-                    Share
-                  </div>
-                  <div className="cursor-pointer rounded-md px-2 py-1 transition-colors duration-300 hover:bg-gray-50">
-                    Print
-                  </div>
-                </div>
-              </div>
-            </div>
+        <div className="grid grid-cols-4 gap-8">
+          <div className="col-span-3">
             <ChartAreaInteractive />
           </div>
-        </div>
-
-        <div className="mb-8 rounded-xl border border-card bg-card p-5 shadow-sm">
-          <div className="overflow-x-auto">
-            <TransactionsTable />
+          <div className="col-span-1">
+            <SummaryByCategory />
           </div>
         </div>
+        <Transactions />
 
-        <div className="mb-8 grid grid-cols-1 gap-6 md:grid-cols-2">
-          <div className="rounded-xl border border-gray-100 bg-white p-5 shadow-sm">
-            <div className="mb-6 flex items-center justify-between">
-              <h3 className="text-lg font-bold">Upcoming Bills</h3>
-              <button className="text-primary-600 hover:text-primary-800 text-xs transition-colors duration-300">
-                View All
-              </button>
-            </div>
-            <div className="space-y-4">
-              <div className="flex items-center justify-between rounded-lg border border-gray-100 p-3 transition-colors duration-300 hover:bg-gray-50">
-                <div className="flex items-center gap-3">
-                  <div className="rounded-full bg-red-50 p-2">
-                    <span className="material-symbols-outlined text-sm text-red-500">
-                      home
-                    </span>
-                  </div>
-                  <div>
-                    <p className="font-medium">Rent Payment</p>
-                    <p className="text-xs text-gray-500">Due in 3 days</p>
-                  </div>
-                </div>
-                <div className="text-right">
-                  <p className="font-medium">$1,200.00</p>
-                  <p className="text-xs text-red-500">Apr 28, 2023</p>
-                </div>
-              </div>
-              <div className="flex items-center justify-between rounded-lg border border-gray-100 p-3 transition-colors duration-300 hover:bg-gray-50">
-                <div className="flex items-center gap-3">
-                  <div className="rounded-full bg-blue-50 p-2">
-                    <span className="material-symbols-outlined text-sm text-blue-500">
-                      power
-                    </span>
-                  </div>
-                  <div>
-                    <p className="font-medium">Electricity Bill</p>
-                    <p className="text-xs text-gray-500">Due in 7 days</p>
-                  </div>
-                </div>
-                <div className="text-right">
-                  <p className="font-medium">$85.42</p>
-                  <p className="text-xs text-red-500">May 2, 2023</p>
-                </div>
-              </div>
-              <div className="flex items-center justify-between rounded-lg border border-gray-100 p-3 transition-colors duration-300 hover:bg-gray-50">
-                <div className="flex items-center gap-3">
-                  <div className="rounded-full bg-purple-50 p-2">
-                    <span className="material-symbols-outlined text-sm text-purple-500">
-                      wifi
-                    </span>
-                  </div>
-                  <div>
-                    <p className="font-medium">Internet Service</p>
-                    <p className="text-xs text-gray-500">Due in 10 days</p>
-                  </div>
-                </div>
-                <div className="text-right">
-                  <p className="font-medium">$59.99</p>
-                  <p className="text-xs text-red-500">May 5, 2023</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
+        <UpcomingTransactions />
+        {/*
           <div className="rounded-xl border border-gray-100 bg-white p-5 shadow-sm">
             <div className="mb-6 flex items-center justify-between">
               <h3 className="text-lg font-bold">Savings Goals</h3>
@@ -229,12 +151,7 @@ const Component = () => {
               </div>
             </div>
           </div>
-        </div>
-
-        <footer className="mt-10 text-center text-sm text-gray-500">
-          <p>© 2023 JAM. All rights reserved.</p>
-          <p className="mt-1">Version x</p>
-        </footer>
+        </div> */}
       </div>
     </main>
   );

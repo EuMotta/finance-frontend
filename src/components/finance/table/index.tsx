@@ -20,7 +20,7 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { useGetAllTransactions } from '@/http/generated/client/api';
-import useGetAllTransactionsParams from '@/http/generated/params/useGetAllTransactionsParams';
+import { useGetAllTransactionsParams } from '@/http/generated/params/useGetAllTransactionsParams';
 import {
   ColumnFiltersState,
   SortingState,
@@ -31,7 +31,6 @@ import {
   getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-import { ChevronDown } from 'lucide-react';
 
 import TransactionsFilter from './filter';
 import usersColumns from './table/columns';
@@ -81,8 +80,6 @@ export function TransactionsTable() {
   return (
     <div className="w-full">
       <div className="flex items-center justify-between py-4">
-        <h3>Transações recentes</h3>
-        <TransactionsFilter />
         {/* <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">

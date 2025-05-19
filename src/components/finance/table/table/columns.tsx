@@ -18,7 +18,7 @@ import { ColumnDef } from '@tanstack/react-table';
 import { ArrowUpDown, MoreHorizontal } from 'lucide-react';
 
 import currencyConverter from '@/utils/currency-converter';
-import formatDate from '@/utils/format-date';
+import { formatDate } from '@/utils/format-date';
 
 import {
   TRANSACTION_CATEGORIES,

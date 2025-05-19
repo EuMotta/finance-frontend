@@ -30,7 +30,7 @@ type DateFormatOptions = {
  * // Retorna "25 de janeiro de 2023, 14:30"
  * formatDate("2023-01-25T14:30:00", "pt-BR", { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' });
  */
-export default function formatDate(
+export function formatDate(
   date: string,
   locale = 'pt-BR',
   options: DateFormatOptions = {
@@ -57,6 +57,44 @@ export default function formatDate(
     return parsedDate.toLocaleDateString(locale, options);
   } catch (error) {
     console.error('Erro ao formatar data:', error);
+    return 'Data inválida';
+  }
+}
+
+export function lastDate(date: string): string {
+  if (!date) return 'Data não disponível';
+
+  try {
+    let parsedDate: Date;
+
+    if (/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/.test(date)) {
+      const isoDate = date.replace(' ', 'T') + 'Z';
+      parsedDate = new Date(isoDate);
+    } else if (!date.includes('T')) {
+      const [day, month, year] = date.split('/').map(Number);
+      parsedDate = new Date(year, month - 1, day);
+    } else {
+      parsedDate = new Date(date);
+    }
+
+    const today = new Date();
+    parsedDate.setHours(0, 0, 0, 0);
+    today.setHours(0, 0, 0, 0);
+
+    const diffTime = parsedDate.getTime() - today.getTime();
+    const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24));
+
+    if (diffDays === 0) {
+      return 'Hoje';
+    } else if (diffDays > 0) {
+      return `Faltam ${diffDays} dia${diffDays > 1 ? 's' : ''}`;
+    } else {
+      return `Atrasado em ${Math.abs(diffDays)} dia${
+        Math.abs(diffDays) > 1 ? 's' : ''
+      }`;
+    }
+  } catch (error) {
+    console.error('Erro ao calcular dias restantes:', error);
     return 'Data inválida';
   }
 }

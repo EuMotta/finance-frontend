@@ -1,3 +1,5 @@
+import { TRANSACTION_CATEGORIES } from "@/constants/transaction_categories";
+
 type Nullable<T> = T | null;
 
 const getString = (value: unknown): string => {
@@ -54,8 +56,14 @@ const getBrowser = (browser: unknown): { ip: string; user_agent: string } => {
     user_agent: getString(b.user_agent),
   };
 };
-
+const getCategoryIcon = (categoryValue: string) => {
+  const category = TRANSACTION_CATEGORIES.find(
+    (c) => c.value === categoryValue,
+  );
+  return category?.icon || null;
+};
 export default {
+  getCategoryIcon,
   getString,
   getDateIfValid,
   getArrayIfValid,

@@ -1,11 +1,15 @@
 import { NextFetchEvent, NextRequest, NextResponse } from 'next/server';
-
+import { getToken } from 'next-auth/jwt';
 import { MiddlewareFactory } from './middleware-factory';
+import { env } from '@/env';
 
 export const auth: MiddlewareFactory = (next) => {
   return async (request: NextRequest, _next: NextFetchEvent) => {
-    /* Troque a session pelo auth desejado */
-    const session = false;
+    const token = await getToken({
+      req: request,
+      secret: env.NEXTAUTH_SECRET,
+    });
+    const session = token;
     const protectedRoutes = ['/private'];
     const authRoutes = ['/entrar', '/cadastrar', '/'];
     const isProtectedRoute = protectedRoutes.some((route) =>

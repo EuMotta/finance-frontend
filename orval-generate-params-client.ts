@@ -54,6 +54,8 @@ export const generateParamHooks = async () => {
  * @returns Código do hook
  */
 const generateQueryHookCode = (hookName: string, paramNames: string[]) => {
+  const typeName = hookName.replace(/^use/, '') + 'Params';
+
   const parsers = paramNames.reduce(
     (acc, param) => {
       if (param.toLowerCase() === 'order') {
@@ -63,7 +65,7 @@ const generateQueryHookCode = (hookName: string, paramNames: string[]) => {
       } else if (param.toLowerCase() === 'limit') {
         acc[param] = `parseAsInteger.withDefault(10)`;
       } else {
-        acc[param] = `parseAsString.withDefault('')`;
+        acc[param] = `parseAsString`;
       }
       return acc;
     },
@@ -86,6 +88,11 @@ const generateQueryHookCode = (hookName: string, paramNames: string[]) => {
     .map(([key, value]) => `  ${key}: ${value},`)
     .join('\n');
 
+  // Generate transformation code for null to undefined
+  const transformCode = paramNames
+    .map((param) => `    ${param}: params.${param} ?? undefined,`)
+    .join('\n');
+
   const hookBody = `
 import {
   type UrlKeys,
@@ -94,6 +101,7 @@ import {
   parseAsStringEnum,
   parseAsInteger,
 } from 'nuqs';
+
 
 export const ${hookName}ParamsParsers = {
 ${parsersCode}
@@ -108,12 +116,15 @@ export const ${hookName}Params = () => {
     urlKeys: ${hookName}ParamsUrlKeys,
   });
 
+  const transformedParams = {
+${transformCode}
+  };
+
   return {
-    params,
+    params: transformedParams,
     setFilterParams,
   };
 };
-
 
 export default ${hookName}Params;
   `;
